@@ -1,4 +1,6 @@
 import pandas as pd
+from collections import Counter
+
 df = pd.read_csv('buscas.csv')
 X_df = df[['home', 'busca', 'logado']]
 Y_df = df['comprou']
@@ -10,9 +12,10 @@ X = Xdummies_df.values
 Y = Ydummies_df.values
 
 # a eficacia do algoritmo que chuta tudo 0 ou 1 
-acerto_de_um = len(Y[Y==1])
-acerto_de_zero = len(Y[Y==0])
-taxa_de_acerto_base = 100.0 * max(acerto_de_um, acerto_de_zero) / len(Y)  #max -> irá pegar o que tiver mais valores e realiazar o calculo 
+acerto_base = max(Counter(Y).values())
+acerto_de_um = list(Y).count('sim')
+acerto_de_zero = list(Y).count('nao')
+taxa_de_acerto_base = 100.0 * acerto_base / len(Y)  #max -> irá pegar o que tiver mais valores e realiazar o calculo 
 print("Taxa de acerto base: %f" % taxa_de_acerto_base)
 # restante do código
 
@@ -33,11 +36,9 @@ modelo = MultinomialNB()
 modelo.fit(treino_dados, treino_marcacoes)
 
 resultado = modelo.predict(teste_dados)
+acertos = (resultado == teste_marcacoes)
 
-diferencas = resultado - teste_marcacoes
-
-acertos = [d for d in diferencas if d == 0]
-total_de_acertos = len(acertos)
+total_de_acertos = sum(acertos)
 total_de_elementos = len(teste_dados)
 
 taxa_de_acerto = 100.0 * total_de_acertos / total_de_elementos
