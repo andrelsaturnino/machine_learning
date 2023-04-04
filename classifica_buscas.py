@@ -11,12 +11,11 @@ Ydummies_df = Y_df
 X = Xdummies_df.values
 Y = Ydummies_df.values
 
-# a eficacia do algoritmo que chuta tudo 0 ou 1 
-acerto_base = max(Counter(Y).values())
+
+
 acerto_de_um = list(Y).count('sim')
 acerto_de_zero = list(Y).count('nao')
-taxa_de_acerto_base = 100.0 * acerto_base / len(Y)  #max -> irá pegar o que tiver mais valores e realiazar o calculo 
-print("Taxa de acerto base: %f" % taxa_de_acerto_base)
+
 # restante do código
 
 
@@ -45,3 +44,8 @@ taxa_de_acerto = 100.0 * total_de_acertos / total_de_elementos
 
 print("Taxa de acerto do algoritmo: %f" % taxa_de_acerto)
 print(total_de_elementos)
+
+# a eficacia do algoritmo que chuta tudo um unico valor
+acerto_base = max(Counter(teste_marcacoes).values())
+taxa_de_acerto_base = 100.0 * acerto_base / len(teste_marcacoes)  #max -> irá pegar o que tiver mais valores e realiazar o calculo 
+print("Taxa de acerto base: %f" % taxa_de_acerto_base)
